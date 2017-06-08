@@ -1,2 +1,2 @@
 # minifw
-It's a mini web framework written in Python
+It's a mini web framework written in Python using aiohttp.
