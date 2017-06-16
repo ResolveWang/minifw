@@ -23,6 +23,7 @@ def merge(defaults, override):
         if k in override:
             if isinstance(v, dict):
                 r[k] = merge(v, override[k])
+                print(r[k])
             else:
                 r[k] = override[k]
         else:
@@ -31,10 +32,10 @@ def merge(defaults, override):
 
 
 def to_dict(d):
-    D = Dict()
+    obj = Dict()
     for k, v in d.items():
-        D[k] = to_dict(v) if isinstance(v, dict) else v
-    return D
+        obj[k] = to_dict(v) if isinstance(v, dict) else v
+    return obj
 
 configs = config_default.configs
 
@@ -46,3 +47,5 @@ else:
     configs = merge(configs, config_override.configs)
 
 configs = to_dict(configs)
+
+__all__ = (configs, )
