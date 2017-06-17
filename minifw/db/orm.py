@@ -69,7 +69,7 @@ class ModelMetaClass(type):
         primary_key = None
         for k, v in attrs.items():
             if isinstance(v, Field):
-                logging.info('found mapping:{} => {}'.format(k, v))
+                #logging.info('found mapping:{} => {}'.format(k, v))
                 mappings[k] = v
                 if v.primary_key:
                     if primary_key:
@@ -95,6 +95,7 @@ class ModelMetaClass(type):
         return type.__new__(cls, name, bases, attrs)
 
 
+# todo: remove the pool args from the code below
 class Model(dict, metaclass=ModelMetaClass):
     def __init__(self, **kw):
         super().__init__(**kw)
@@ -175,3 +176,5 @@ class Model(dict, metaclass=ModelMetaClass):
         if rows != 1:
             logging.warning('failed to remove by primary key: affected rows: {}'.format(rows))
         return rows
+
+__all__ = (Model, StringField, FloatField, BooleanField, IntegerField, TextField)
