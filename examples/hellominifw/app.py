@@ -12,7 +12,7 @@ async def init(eloop):
         loop=eloop,
         middlewares=[logger_factory, response_factory],
     )
-    add_routes(app=app, module_name='minifw.handlers')
+    add_routes(app=app, module_name='example.hellominifw.handlers')
     init_jinja2(app, filters=dict(datetime=datetime_filter))
     add_static(app=app)
     srv = await loop.create_server(app.make_handler(), '127.0.0.1', 5000)
