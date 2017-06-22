@@ -2,7 +2,7 @@ import logging
 import asyncio
 from aiohttp import web
 from minifw.core.framewk import add_static, add_routes
-from minifw.middleware import logger_factory, response_factory, init_jinja2, datetime_filter
+from minifw.middleware import *
 
 
 logging.basicConfig(level=logging.INFO)
@@ -12,7 +12,7 @@ async def init(eloop):
         loop=eloop,
         middlewares=[logger_factory, response_factory],
     )
-    add_routes(app=app, module_name='example.hellominifw.handlers')
+    add_routes(app=app, module_name='examples.basic.handlers')
     init_jinja2(app, filters=dict(datetime=datetime_filter))
     add_static(app=app)
     srv = await loop.create_server(app.make_handler(), '127.0.0.1', 5000)
