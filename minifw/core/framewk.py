@@ -74,6 +74,7 @@ def has_request_arg(fn):
                       and param.kind != inspect.Parameter.VAR_POSITIONAL):
             raise ValueError(
                 'request parameter must be the last named parameter in function: {}{}'.format(fn.__name__, str(sig)))
+    return found
 
 
 class RequestHandler(object):
@@ -155,7 +156,6 @@ def add_route(app, fn):
         fn = asyncio.coroutine(fn)
     logging.info('add route {} {} => {}({})'.format(method, path, fn.__name__,
                                                     ', '.join(inspect.signature(fn).parameters.keys())))
-    print(RequestHandler(app, fn))
     app.router.add_route(method, path, RequestHandler(app, fn))
 
 
