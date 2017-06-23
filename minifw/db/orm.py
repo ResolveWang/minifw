@@ -69,7 +69,6 @@ class ModelMetaClass(type):
         primary_key = None
         for k, v in attrs.items():
             if isinstance(v, Field):
-                #logging.info('found mapping:{} => {}'.format(k, v))
                 mappings[k] = v
                 if v.primary_key:
                     if primary_key:
