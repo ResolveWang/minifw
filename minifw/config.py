@@ -1,3 +1,4 @@
+import os
 from minifw import config_default
 
 
@@ -23,7 +24,6 @@ def merge(defaults, override):
         if k in override:
             if isinstance(v, dict):
                 r[k] = merge(v, override[k])
-                print(r[k])
             else:
                 r[k] = override[k]
         else:
@@ -38,13 +38,15 @@ def to_dict(d):
     return obj
 
 configs = config_default.configs
+project_dir = os.path.split(os.getcwd())
 
 try:
-    from minifw import config_override
+    my_module = __import__('{}.config_override'.format(project_dir[1]), globals(), locals(), ['configs'])
 except ImportError:
+    print('import error')
     pass
 else:
-    configs = merge(configs, config_override.configs)
+    configs = merge(configs, my_module.configs)
 
 configs = to_dict(configs)
 
